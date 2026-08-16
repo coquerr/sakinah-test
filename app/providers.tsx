@@ -6,8 +6,6 @@ import { useSettingsStore } from "@/store/settings-store"
 import { useTrackerStore } from "@/store/tracker-store"
 import { useOnboardingStore } from "@/store/onboarding-store"
 import { getDirection } from "@/lib/i18n"
-import { useSettingsSync } from "@/hooks/use-settings-sync"
-import { useTrackerSync } from "@/hooks/use-tracker-sync"
 
 function DirectionSync() {
   const language = useSettingsStore((state) => state.language)
@@ -30,23 +28,11 @@ function StoreHydration() {
   return null
 }
 
-function SettingsSync() {
-  useSettingsSync()
-  return null
-}
-
-function TrackerSync() {
-  useTrackerSync()
-  return null
-}
-
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <StoreHydration />
       <DirectionSync />
-      <SettingsSync />
-      <TrackerSync />
       {children}
     </ThemeProvider>
   )

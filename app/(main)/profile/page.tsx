@@ -1,4 +1,3 @@
-import { AccountSection } from "@/components/settings/account-section"
 import { QuickLinks } from "@/components/settings/quick-links"
 import { CitySearch } from "@/components/settings/city-search"
 import { LanguageSelector } from "@/components/settings/language-selector"
@@ -9,8 +8,6 @@ export default function ProfilePage() {
   return (
     <section className="space-y-6 py-4">
       <PrayerTracker />
-
-      <AccountSection />
 
       <div>
         <SectionLabel labelKey="profile.quickLinksLabel" />
