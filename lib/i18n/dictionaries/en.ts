@@ -1,0 +1,134 @@
+import { Dictionary } from "../types"
+
+export const en: Dictionary = {
+  common: {
+    appName: "Sakinah"
+  },
+  nav: {
+    home: "Home",
+    quran: "Quran",
+    azkar: "Azkar",
+    qibla: "Qibla",
+    profile: "Profile"
+  },
+  settings: {
+    languageTitle: "Interface language",
+    location: {
+      title: "Location",
+      currentPrefix: "Current city",
+      notSelected: "No city selected",
+      placeholder: "Enter a city",
+      searching: "Searching..."
+    },
+    method: {
+      title: "Calculation method"
+    }
+  },
+  account: {
+    title: "Аккаунт",
+    subtitle: "Войдите, чтобы синхронизировать настройки между устройствами",
+    emailPlaceholder: "Ваш email",
+    sendLink: "Отправить ссылку для входа",
+    synced: "Synced",
+    sending: "Отправка...",
+    linkSent: "Ссылка отправлена. Проверьте почту.",
+    error: "Не удалось отправить ссылку. Попробуйте снова.",
+    signOut: "Выйти"
+  },
+  greeting: {
+    morning: "Good morning",
+    afternoon: "Good afternoon",
+    evening: "Good evening",
+    night: "Good night"
+  },
+  prayer: {
+    fajr: "Fajr",
+    sunrise: "Sunrise",
+    dhuhr: "Dhuhr",
+    asr: "Asr",
+    maghrib: "Maghrib",
+    isha: "Isha",
+    next: "Next prayer",
+    at: "at",
+    tracker: {
+      title: "Today's prayer tracker",
+      markDone: "Mark as done",
+      markMissed: "Mark as missed"
+    }
+  },
+  qibla: {
+    subtitle: "Direction to the Kaaba from your location",
+    north: "N",
+    east: "E",
+    south: "S",
+    west: "W",
+    fromNorth: "from north",
+    enableCompass: "Allow compass access",
+    unsupported: "Your device does not support the orientation sensor. The arrow shows the bearing relative to north."
+  },
+  calendar: {
+    title: "Calendar",
+    hijriYearSuffix: "AH",
+    today: "Today",
+    prevMonth: "Previous month",
+    nextMonth: "Next month",
+    significantDatesTitle: "Significant dates this month",
+    dates: {
+      ashura: "Ashura",
+      mawlid: "Mawlid an-Nabi",
+      isra: "Isra and Mi'raj",
+      baraat: "Night of Baraat",
+      ramadanStart: "Start of Ramadan",
+      laylatAlQadr: "Laylat al-Qadr (estimated)",
+      eidFitr: "Eid al-Fitr",
+      dayOfArafah: "Day of Arafah",
+      eidAdha: "Eid al-Adha"
+    }
+  },
+  quickLinks: {
+    calendar: "Islamic calendar",
+    stats: "Statistics"
+  },
+  profile: {
+     quickLinksLabel: "Sections",
+     settingsLabel: "Settings"
+   },
+  stats: {
+    title: "Statistics",
+    streakTitle: "Day streak",
+    streakDayOne: "day",
+    streakDays: "days",
+    rangeWeek: "Week",
+    rangeMonth: "Month",
+    percentLabel: "Completed",
+    doneLabel: "Done",
+    missedLabel: "Missed"
+  },
+  calculationMethods: {
+    muslimWorldLeague: "Muslim World League",
+    egyptian: "Egyptian General Authority",
+    karachi: "Karachi",
+    ummAlQura: "Umm al-Qura (Mecca)",
+    dubai: "Dubai",
+    moonsightingCommittee: "Moonsighting Committee",
+    northAmerica: "ISNA (North America)",
+    kuwait: "Kuwait",
+    qatar: "Qatar",
+    singapore: "Singapore",
+    tehran: "Tehran",
+    turkey: "Turkey (Diyanet)"
+  },
+  onboarding: {
+    slide1Title: "Welcome to Sakinah",
+    slide1Text: "A quiet digital companion for daily worship",
+    slide2Title: "Prayer times and Qibla",
+    slide2Text: "Accurate calculation based on your location and direction to the Kaaba",
+    slide3Title: "Quran and Azkar",
+    slide3Text: "Quick access to trusted sources for reading and remembrance",
+    slide4Title: "Let's get started",
+    slide4Text: "Allow location access on the next step for accurate prayer times",
+    next: "Next",
+    start: "Get started",
+    skip: "Skip"
+  }
+}
