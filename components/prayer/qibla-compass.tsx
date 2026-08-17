@@ -65,7 +65,9 @@ export function QiblaCompass() {
       <div className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-border/60 bg-surface p-6 shadow-card">
         <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 bg-glow-primary" />
 
-        <p className="relative text-sm text-muted-foreground">{t("qibla.subtitle")}</p>
+        <p className="relative text-xs text-red-400">
+          DEBUG: heading={heading?.toFixed(1) ?? "null"} qibla={qiblaAngle.toFixed(1)} rotation={arrowRotation.toFixed(1)} accuracy={accuracy}
+        </p>
 
         <div
           className="relative mt-8 flex items-center justify-center"
