@@ -63,8 +63,28 @@ export const ar: Dictionary = {
     south: "ج",
     west: "غ",
     fromNorth: "من الشمال",
+    accuracyHigh: "دقة عالية",
+   accuracyMedium: "دقة متوسطة",
+   accuracyLow: "دقة منخفضة",
+   accuracyUnknown: "الدقة غير متوفرة",
+   calibrationHint: "قم بتدوير هاتفك عدة مرات للمعايرة",
+   calibrateButton: "معايرة",
+   calibrateInstructions: "حرّك هاتفك على شكل الرقم ثمانية لمعايرة حساس البوصلة.",
+   aligned: "أنت متجه نحو القبلة",
     enableCompass: "السماح بالوصول إلى البوصلة",
-    unsupported: "جهازك لا يدعم مستشعر الاتجاه. يوضح السهم الاتجاه بالنسبة للشمال."
+    unsupported: "جهازك لا يدعم مستشعر الاتجاه. يوضح السهم الاتجاه بالنسبة للشمال.",
+    distanceLabel: "المسافة إلى الكعبة",
+   distanceCity: "مكة المكرمة، السعودية",
+   directions: {
+     n: "الشمال",
+     ne: "الشمال الشرقي",
+     e: "الشرق",
+     se: "الجنوب الشرقي",
+     s: "الجنوب",
+     sw: "الجنوب الغربي",
+     w: "الغرب",
+     nw: "الشمال الغربي"
+   }
   },
   calendar: {
     title: "التقويم",

@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react"
 
+export type CompassAccuracy = "high" | "medium" | "low" | "unknown"
+
 interface OrientationState {
   heading: number | null
+  accuracy: CompassAccuracy
   permissionState: "unknown" | "granted" | "denied" | "unsupported"
   requestPermission: () => Promise<void>
 }
@@ -12,8 +15,28 @@ type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
   requestPermission?: () => Promise<"granted" | "denied">
 }
 
+type CompassOrientationEvent = DeviceOrientationEvent & {
+  webkitCompassHeading?: number
+  webkitCompassAccuracy?: number
+}
+
+function resolveAccuracy(event: CompassOrientationEvent): CompassAccuracy {
+  if (typeof event.webkitCompassAccuracy === "number") {
+    if (event.webkitCompassAccuracy < 0) return "unknown"
+    if (event.webkitCompassAccuracy <= 15) return "high"
+    if (event.webkitCompassAccuracy <= 50) return "medium"
+    return "low"
+  }
+
+  if (event.absolute === true) return "high"
+  if (event.alpha !== null) return "medium"
+
+  return "unknown"
+}
+
 export function useDeviceOrientation(): OrientationState {
   const [heading, setHeading] = useState<number | null>(null)
+  const [accuracy, setAccuracy] = useState<CompassAccuracy>("unknown")
   const [permissionState, setPermissionState] = useState<OrientationState["permissionState"]>(
     "unknown"
   )
@@ -25,13 +48,15 @@ export function useDeviceOrientation(): OrientationState {
     }
 
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      const webkitEvent = event as DeviceOrientationEvent & { webkitCompassHeading?: number }
+      const compassEvent = event as CompassOrientationEvent
 
-      if (typeof webkitEvent.webkitCompassHeading === "number") {
-        setHeading(webkitEvent.webkitCompassHeading)
+      if (typeof compassEvent.webkitCompassHeading === "number") {
+        setHeading(compassEvent.webkitCompassHeading)
       } else if (event.alpha !== null) {
         setHeading(360 - event.alpha)
       }
+
+      setAccuracy(resolveAccuracy(compassEvent))
     }
 
     const eventConstructor = DeviceOrientationEvent as DeviceOrientationEventWithPermission
@@ -61,13 +86,15 @@ export function useDeviceOrientation(): OrientationState {
         setPermissionState("granted")
 
         window.addEventListener("deviceorientation", (event) => {
-          const webkitEvent = event as DeviceOrientationEvent & { webkitCompassHeading?: number }
+          const compassEvent = event as CompassOrientationEvent
 
-          if (typeof webkitEvent.webkitCompassHeading === "number") {
-            setHeading(webkitEvent.webkitCompassHeading)
+          if (typeof compassEvent.webkitCompassHeading === "number") {
+            setHeading(compassEvent.webkitCompassHeading)
           } else if (event.alpha !== null) {
             setHeading(360 - event.alpha)
           }
+
+          setAccuracy(resolveAccuracy(compassEvent))
         })
       } else {
         setPermissionState("denied")
@@ -77,5 +104,5 @@ export function useDeviceOrientation(): OrientationState {
     }
   }
 
-  return { heading, permissionState, requestPermission }
+  return { heading, accuracy, permissionState, requestPermission }
 }

@@ -28,6 +28,10 @@ export function CitySearch() {
           ? `${t("settings.location.currentPrefix")}: ${currentLabel}`
           : t("settings.location.notSelected")}
       </p>
+      <p className="mt-1 text-[11px] text-muted-foreground/70">
+        Местоположение используется только на вашем устройстве для расчёта времени намаза и не
+        передаётся на сервер
+      </p>
 
       <div className="relative mt-3">
         <Search

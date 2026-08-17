@@ -65,6 +65,26 @@ export interface Dictionary {
     fromNorth: string
     enableCompass: string
     unsupported: string
+    distanceLabel: string
+    distanceCity: string
+    directions: {
+      n: string
+      ne: string
+      e: string
+      se: string
+      s: string
+      sw: string
+      w: string
+      nw: string
+    }
+    accuracyHigh: string
+    accuracyMedium: string
+    accuracyLow: string
+    accuracyUnknown: string
+    calibrationHint: string
+    calibrateButton: string
+    calibrateInstructions: string
+    aligned: string
   }
   calendar: {
     title: string

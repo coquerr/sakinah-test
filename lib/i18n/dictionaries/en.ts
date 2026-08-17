@@ -64,7 +64,27 @@ export const en: Dictionary = {
     west: "W",
     fromNorth: "from north",
     enableCompass: "Allow compass access",
-    unsupported: "Your device does not support the orientation sensor. The arrow shows the bearing relative to north."
+    accuracyHigh: "High accuracy",
+   accuracyMedium: "Medium accuracy",
+   accuracyLow: "Low accuracy",
+   accuracyUnknown: "Accuracy unavailable",
+   calibrationHint: "Rotate your phone a few times to calibrate",
+   calibrateButton: "Calibrate",
+   calibrateInstructions: "Move your phone in a figure-eight motion to calibrate the compass sensor.",
+   aligned: "You are facing the Qibla",
+    unsupported: "Your device does not support the orientation sensor. The arrow shows the bearing relative to north.",
+    distanceLabel: "Distance to the Kaaba",
+   distanceCity: "Mecca, Saudi Arabia",
+   directions: {
+     n: "North",
+     ne: "Northeast",
+     e: "East",
+     se: "Southeast",
+     s: "South",
+     sw: "Southwest",
+     w: "West",
+     nw: "Northwest"
+   }
   },
   calendar: {
     title: "Calendar",
