@@ -130,9 +130,6 @@ export function QiblaCompass() {
               size={64}
               strokeWidth={1}
               className={cn("transition-colors", aligned ? "fill-accent text-accent" : "fill-primary text-primary")}
-              style={{
-                filter: `drop-shadow(0 0 ${6 + closeness * 14}px hsl(var(${aligned ? "--accent" : "--primary"}) / ${(0.3 + closeness * 0.5).toFixed(2)}))`
-              }}
             />
           </motion.div>
 
