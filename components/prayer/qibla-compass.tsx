@@ -66,7 +66,9 @@ export function QiblaCompass() {
         <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 bg-glow-primary" />
 
         <p className="relative text-xs text-red-400">
-          DEBUG: heading={heading?.toFixed(1) ?? "null"} qibla={qiblaAngle.toFixed(1)} rotation={arrowRotation.toFixed(1)} accuracy={accuracy}
+          DEBUG: lat={coordinates.latitude.toFixed(4)} lon={coordinates.longitude.toFixed(4)}{" "}
+          heading={heading?.toFixed(1) ?? "null"} qibla={qiblaAngle.toFixed(1)}{" "}
+          rotation={arrowRotation.toFixed(1)} accuracy={accuracy}
         </p>
 
         <div
