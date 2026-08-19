@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Navigation, Landmark, RotateCw, CheckCircle2 } from "lucide-react"
+import { Landmark, RotateCw, CheckCircle2 } from "lucide-react"
 import { useGeolocation } from "@/hooks/use-geolocation"
 import { useDeviceOrientation } from "@/hooks/use-device-orientation"
 import { getQiblaDirection, getDistanceToKaaba, getCompassPoint } from "@/lib/utils/qibla"
@@ -121,15 +121,18 @@ export function QiblaCompass() {
             <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_10px_2px_hsl(var(--accent)/0.5)]" />
           </motion.span>
 
-          <div
+                    <div
             className="flex h-full w-full items-center justify-center transition-transform duration-500 ease-out"
             style={{ transform: `rotate(${arrowRotation}deg)` }}
           >
-            <Navigation
-              size={64}
-              strokeWidth={1}
-              className={cn("transition-colors", aligned ? "fill-accent text-accent" : "fill-primary text-primary")}
-            />
+            <svg
+              width={64}
+              height={64}
+              viewBox="0 0 24 24"
+              className={cn("transition-colors", aligned ? "text-accent" : "text-primary")}
+            >
+              <path d="M12 1 L20 20 L12 15 L4 20 Z" fill="currentColor" />
+            </svg>
           </div>
 
           <div className="absolute h-3 w-3 rounded-full bg-accent" />
