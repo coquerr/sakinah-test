@@ -121,21 +121,16 @@ export function QiblaCompass() {
             <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_10px_2px_hsl(var(--accent)/0.5)]" />
           </motion.span>
 
-          <motion.div
-            animate={{ rotate: arrowRotation }}
-            transition={springTransition}
-            className="flex h-full w-full items-center justify-center"
+          <div
+            className="flex h-full w-full items-center justify-center transition-transform duration-500 ease-out"
+            style={{ transform: `rotate(${arrowRotation}deg)` }}
           >
             <Navigation
               size={64}
               strokeWidth={1}
               className={cn("transition-colors", aligned ? "fill-accent text-accent" : "fill-primary text-primary")}
             />
-          </motion.div>
-          <div
-            className="absolute left-1/2 top-1/2 h-16 w-1 bg-red-500"
-            style={{ transformOrigin: "top center", transform: `translateX(-50%) rotate(${arrowRotation}deg)` }}
-          />
+          </div>
 
           <div className="absolute h-3 w-3 rounded-full bg-accent" />
         </div>
