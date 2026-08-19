@@ -132,10 +132,14 @@ export function QiblaCompass() {
               className={cn("transition-colors", aligned ? "fill-accent text-accent" : "fill-primary text-primary")}
             />
           </motion.div>
+          <div
+            className="absolute left-1/2 top-1/2 h-16 w-1 bg-red-500"
+            style={{ transformOrigin: "top center", transform: `translateX(-50%) rotate(${arrowRotation}deg)` }}
+          />
 
           <div className="absolute h-3 w-3 rounded-full bg-accent" />
         </div>
-
+        
         <div className="relative mt-6 flex flex-col items-center">
           <span className="font-heading text-4xl font-semibold tabular-nums text-foreground">
             {Math.round(qiblaAngle)}°
