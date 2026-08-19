@@ -8,6 +8,7 @@ import { useDeviceOrientation } from "@/hooks/use-device-orientation"
 import { getQiblaDirection, getDistanceToKaaba, getCompassPoint } from "@/lib/utils/qibla"
 import { useTranslation } from "@/hooks/use-translation"
 import { localeMap } from "@/lib/i18n"
+import { cn } from "@/lib/utils/cn"
 
 const springTransition = { type: "spring" as const, stiffness: 60, damping: 16 }
 const ticks = Array.from({ length: 24 }, (_, index) => index * 15)
