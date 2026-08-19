@@ -8,7 +8,6 @@ import { useDeviceOrientation } from "@/hooks/use-device-orientation"
 import { getQiblaDirection, getDistanceToKaaba, getCompassPoint } from "@/lib/utils/qibla"
 import { useTranslation } from "@/hooks/use-translation"
 import { localeMap } from "@/lib/i18n"
-import { cn } from "@/lib/utils/cn"
 
 const springTransition = { type: "spring" as const, stiffness: 60, damping: 16 }
 const ticks = Array.from({ length: 24 }, (_, index) => index * 15)
@@ -65,12 +64,6 @@ export function QiblaCompass() {
       <div className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-border/60 bg-surface p-6 shadow-card">
         <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 bg-glow-primary" />
 
-        <p className="relative text-xs text-red-400">
-          DEBUG: lat={coordinates.latitude.toFixed(4)} lon={coordinates.longitude.toFixed(4)}{" "}
-          heading={heading?.toFixed(1) ?? "null"} qibla={qiblaAngle.toFixed(1)}{" "}
-          rotation={arrowRotation.toFixed(1)} accuracy={accuracy}
-        </p>
-
         <div
           className="relative mt-8 flex items-center justify-center"
           style={{ width: "min(78vw, 320px)", height: "min(78vw, 320px)" }}
@@ -112,30 +105,25 @@ export function QiblaCompass() {
             </motion.span>
           ))}
 
-          <motion.span
+                    <motion.span
             className="absolute inset-0"
             animate={{ rotate: qiblaAngle - deviceHeading }}
             transition={springTransition}
           >
             <span className="absolute left-1/2 top-1/2 h-[calc(50%-14px)] w-px -translate-x-1/2 -translate-y-full origin-bottom bg-gradient-to-t from-transparent to-accent/50" />
-            <span className="absolute left-1/2 top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_10px_2px_hsl(var(--accent)/0.5)]" />
+            <span
+              className="absolute left-1/2 top-2 -translate-x-1/2 rounded-full bg-accent transition-all duration-500"
+              style={{
+                width: `${12 + closeness * 6}px`,
+                height: `${12 + closeness * 6}px`,
+                boxShadow: `0 0 ${8 + closeness * 16}px ${2 + closeness * 4}px hsl(var(--accent) / ${(0.4 + closeness * 0.4).toFixed(2)})`
+              }}
+            />
           </motion.span>
 
-                    <div
-            className="flex h-full w-full items-center justify-center transition-transform duration-500 ease-out"
-            style={{ transform: `rotate(${arrowRotation}deg)` }}
-          >
-            <svg
-              width={64}
-              height={64}
-              viewBox="0 0 24 24"
-              className={cn("transition-colors", aligned ? "text-accent" : "text-primary")}
-            >
-              <path d="M12 1 L20 20 L12 15 L4 20 Z" fill="currentColor" />
-            </svg>
-          </div>
+                    <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t border-muted-foreground/40" />
 
-          <div className="absolute h-3 w-3 rounded-full bg-accent" />
+          <div className="absolute h-3 w-3 rounded-full bg-primary" />
         </div>
         
         <div className="relative mt-6 flex flex-col items-center">
