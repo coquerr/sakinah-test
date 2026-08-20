@@ -64,6 +64,19 @@ export const ru: Dictionary = {
       azkar: "Азкары"
     }
   },
+    quran: {
+    title: "Коран",
+    surahsCount: "сур",
+    readOnPrefix: "Читать на",
+    ayahs: "аятов",
+    meccan: "Мекканская",
+    medinan: "Мединская",
+    openOnPrefix: "Открыть на",
+    noResults: "Ничего не найдено",
+    searchPlaceholder: "Сура, номер или Йа Син",
+    clearSearch: "Очистить поиск",
+    popularLabel: "Популярные:"
+  },
   qibla: {
     subtitle: "Направление на Каабу от вашего местоположения",
     north: "С",

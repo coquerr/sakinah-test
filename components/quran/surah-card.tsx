@@ -3,8 +3,17 @@
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { SurahMeta } from "@/types/quran"
+import { getSurahRuMeta } from "@/lib/constants/surah-ru-meta"
+import { useTranslation } from "@/hooks/use-translation"
 
 export function SurahCard({ surah, index }: { surah: SurahMeta; index: number }) {
+  const { t, language } = useTranslation()
+  const ruMeta = language === "ru" ? getSurahRuMeta(surah.number) : null
+
+  const displayName = ruMeta?.name ?? surah.englishName
+  const displayTranslation = ruMeta?.translation ?? surah.englishNameTranslation
+  const revelationLabel = surah.revelationType === "Meccan" ? t("quran.meccan") : t("quran.medinan")
+
   return (
     <motion.a
       href={`https://quran.com/${surah.number}`}
@@ -21,15 +30,18 @@ export function SurahCard({ surah, index }: { surah: SurahMeta; index: number })
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-foreground">{surah.englishName}</p>
+        <p className="truncate text-sm font-medium text-foreground">{displayName}</p>
         <p className="mt-0.5 truncate text-xs text-muted-foreground">
-          {surah.englishNameTranslation} · {surah.numberOfAyahs} аятов
+          {displayTranslation} · {surah.numberOfAyahs} {t("quran.ayahs")} · {revelationLabel}
         </p>
       </div>
 
-      <span className="shrink-0 font-arabic text-xl leading-none text-primary">
-        {surah.name}
-      </span>
+      <div className="relative flex shrink-0 flex-col items-end gap-1">
+        <span className="font-arabic text-xl leading-none text-primary">{surah.name}</span>
+        <span className="pointer-events-none absolute top-full mt-1 flex items-center gap-1 whitespace-nowrap text-[11px] text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          {t("quran.openOnPrefix")} quran.com
+        </span>
+      </div>
 
       <ArrowUpRight
         size={14}

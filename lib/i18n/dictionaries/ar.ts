@@ -64,6 +64,19 @@ export const ar: Dictionary = {
       azkar: "الأذكار"
     }
   },
+    quran: {
+    title: "القرآن",
+    surahsCount: "سورة",
+    readOnPrefix: "اقرأ على",
+    ayahs: "آية",
+    meccan: "مكية",
+    medinan: "مدنية",
+    openOnPrefix: "افتح على",
+    noResults: "لا توجد نتائج",
+    searchPlaceholder: "السورة، الرقم، أو يس",
+    clearSearch: "مسح البحث",
+    popularLabel: "الأكثر شيوعًا:"
+  },
   qibla: {
     subtitle: "اتجاه الكعبة من موقعك",
     north: "ش",

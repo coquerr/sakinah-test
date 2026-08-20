@@ -64,6 +64,19 @@ export const en: Dictionary = {
       azkar: "Azkar"
     }
   },
+    quran: {
+    title: "Quran",
+    surahsCount: "surahs",
+    readOnPrefix: "Read on",
+    ayahs: "ayahs",
+    meccan: "Meccan",
+    medinan: "Medinan",
+    openOnPrefix: "Open on",
+    noResults: "No results found",
+    searchPlaceholder: "Surah, number, or Ya-Sin",
+    clearSearch: "Clear search",
+    popularLabel: "Popular:"
+  },
   qibla: {
     subtitle: "Direction to the Kaaba from your location",
     north: "N",

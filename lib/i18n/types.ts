@@ -11,6 +11,19 @@ export interface Dictionary {
     qibla: string
     profile: string
   }
+  quran: {
+    title: string
+    surahsCount: string
+    readOnPrefix: string
+    ayahs: string
+    meccan: string
+    medinan: string
+    openOnPrefix: string
+    noResults: string
+    searchPlaceholder: string
+    clearSearch: string
+    popularLabel: string
+  }
   settings: {
     languageTitle: string
     location: {
