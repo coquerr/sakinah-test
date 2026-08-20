@@ -37,15 +37,27 @@ export function getCurrentPrayerIndex(entries: PrayerTimeEntry[], now: Date): nu
   return index
 }
 
-export function formatCountdown(target: Date, now: Date): string {
-  const diff = Math.max(0, target.getTime() - now.getTime())
-  const hours = Math.floor(diff / 1000 / 60 / 60)
-  const minutes = Math.floor((diff / 1000 / 60) % 60)
-  const seconds = Math.floor((diff / 1000) % 60)
+export function formatCountdown(target: Date, now: Date, locale: string = "ru-RU"): string {
+  const diffMs = Math.max(0, target.getTime() - now.getTime())
+  const totalSeconds = Math.floor(diffMs / 1000)
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
 
-  const pad = (value: number) => value.toString().padStart(2, "0")
+  const formatUnit = (value: number, unit: "hour" | "minute" | "second") =>
+    new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "short" }).format(value)
 
-  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+  if (hours > 0) {
+    return minutes > 0
+      ? `${formatUnit(hours, "hour")} ${formatUnit(minutes, "minute")}`
+      : formatUnit(hours, "hour")
+  }
+
+  if (minutes > 0) {
+    return `${formatUnit(minutes, "minute")} ${formatUnit(seconds, "second")}`
+  }
+
+  return formatUnit(seconds, "second")
 }
 
 export function formatTime(date: Date, locale: string = "ru-RU"): string {

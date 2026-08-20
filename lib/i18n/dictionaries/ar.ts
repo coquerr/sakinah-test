@@ -50,10 +50,18 @@ export const ar: Dictionary = {
     isha: "العشاء",
     next: "الصلاة القادمة",
     at: "في",
+    in: "بعد",
     tracker: {
       title: "متابعة صلوات اليوم",
       markDone: "تحديد كمنجزة",
       markMissed: "تحديد كفائتة"
+    }
+  },
+    home: {
+    quickActions: {
+      qibla: "القبلة",
+      allPrayers: "كل الصلوات",
+      azkar: "الأذكار"
     }
   },
   qibla: {

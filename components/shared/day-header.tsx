@@ -2,23 +2,19 @@
 
 import { useMemo } from "react"
 import { motion } from "framer-motion"
+import { MapPin } from "lucide-react"
 import { getGreeting } from "@/lib/utils/greeting"
-import { toHijri } from "@/lib/utils/hijri"
+import { useGeolocation } from "@/hooks/use-geolocation"
 import { useTranslation } from "@/hooks/use-translation"
 import { localeMap } from "@/lib/i18n"
-import { hijriMonthsByLanguage } from "@/lib/i18n/hijri-months"
 
 export function DayHeader() {
   const { t, language } = useTranslation()
+  const { coordinates } = useGeolocation()
   const now = useMemo(() => new Date(), [])
-  const hijri = useMemo(() => toHijri(now), [now])
   const locale = localeMap[language]
-  const monthName = hijriMonthsByLanguage[language][hijri.month - 1]
 
-  const gregorianLabel = now.toLocaleDateString(locale, {
-    day: "numeric",
-    month: "long"
-  })
+  const weekdayLabel = now.toLocaleDateString(locale, { weekday: "long" })
 
   return (
     <motion.div
@@ -30,10 +26,14 @@ export function DayHeader() {
       <p className="font-heading text-2xl font-semibold tracking-tight text-foreground">
         {t(getGreeting(now))}
       </p>
-      <p className="mt-1.5 text-sm text-muted-foreground">
-        {gregorianLabel} · <span className="tabular-nums">{hijri.day}</span> {monthName}{" "}
-        <span className="tabular-nums">{hijri.year}</span> {t("calendar.hijriYearSuffix")}
-      </p>
+      {coordinates?.label && (
+        <div className="mt-1.5 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <MapPin size={12} className="shrink-0 text-primary/70" />
+          <span>
+            {coordinates.label} · {t("calendar.today")}, {weekdayLabel}
+          </span>
+        </div>
+      )}
     </motion.div>
   )
 }

@@ -17,7 +17,10 @@ export function PrayerList() {
   const currentIndex = getCurrentPrayerIndex(entries, now)
 
   return (
-    <div className="mt-6 overflow-hidden rounded-2xl border border-border/60 bg-surface shadow-card">
+    <div
+      id="prayer-list"
+      className="mt-6 scroll-mt-6 overflow-hidden rounded-2xl border border-border/60 bg-surface shadow-card"
+    >
       {entries.map((entry, index) => {
         const isCurrent = index === currentIndex
         const label = t(`prayer.${entry.name}` as TranslationKey)
@@ -29,25 +32,25 @@ export function PrayerList() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: index * 0.04 }}
             className={cn(
-              "relative flex items-center justify-between border-b border-border-subtle px-5 py-3 last:border-b-0",
-              isCurrent && "bg-primary/[0.06]"
+              "relative flex flex-col gap-0.5 border-b border-border-subtle px-5 py-3.5 last:border-b-0",
+              isCurrent && "bg-primary/[0.03]"
             )}
           >
             {isCurrent && (
-              <span className="absolute inset-y-0 left-0 w-[3px] rounded-r-full bg-primary" />
+              <span className="absolute inset-y-0 left-0 w-[3px] rounded-r-full bg-primary shadow-[0_0_10px_2px_hsl(var(--primary)/0.5)]" />
             )}
             <span
               className={cn(
-                "text-sm",
-                isCurrent ? "font-semibold text-primary" : "text-foreground"
+                "text-xs font-medium",
+                isCurrent ? "text-primary" : "text-muted-foreground"
               )}
             >
               {label}
             </span>
             <span
               className={cn(
-                "text-sm tabular-nums",
-                isCurrent ? "font-medium text-primary" : "text-muted-foreground"
+                "text-lg font-semibold tabular-nums",
+                isCurrent ? "text-primary" : "text-foreground"
               )}
             >
               {formatTime(entry.time, locale)}

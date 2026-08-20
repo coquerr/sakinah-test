@@ -41,7 +41,7 @@ export interface Dictionary {
     evening: string
     night: string
   }
-  prayer: {
+    prayer: {
     fajr: string
     sunrise: string
     dhuhr: string
@@ -50,10 +50,18 @@ export interface Dictionary {
     isha: string
     next: string
     at: string
+    in: string
     tracker: {
       title: string
       markDone: string
       markMissed: string
+    }
+  }
+  home: {
+  quickActions: {
+    qibla: string
+    allPrayers: string
+    azkar: string
     }
   }
   qibla: {

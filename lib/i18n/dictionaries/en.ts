@@ -50,10 +50,18 @@ export const en: Dictionary = {
     isha: "Isha",
     next: "Next prayer",
     at: "at",
+    in: "in",
     tracker: {
       title: "Today's prayer tracker",
       markDone: "Mark as done",
       markMissed: "Mark as missed"
+    }
+  },
+    home: {
+    quickActions: {
+      qibla: "Qibla",
+      allPrayers: "All prayers",
+      azkar: "Azkar"
     }
   },
   qibla: {

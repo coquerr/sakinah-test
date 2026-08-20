@@ -50,10 +50,18 @@ export const ru: Dictionary = {
     isha: "Иша",
     next: "Следующий намаз",
     at: "в",
+    in: "через",
     tracker: {
       title: "Трекер намазов сегодня",
       markDone: "Отметить выполненным",
       markMissed: "Отметить пропущенным"
+    }
+  },
+    home: {
+    quickActions: {
+      qibla: "Кибла",
+      allPrayers: "Все намазы",
+      azkar: "Азкары"
     }
   },
   qibla: {
