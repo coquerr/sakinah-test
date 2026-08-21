@@ -5,10 +5,12 @@ import { ArrowUpRight } from "lucide-react"
 import { SurahMeta } from "@/types/quran"
 import { getSurahRuMeta } from "@/lib/constants/surah-ru-meta"
 import { useTranslation } from "@/hooks/use-translation"
+import { useQuranRecentStore } from "@/store/quran-recent-store"
 
 export function SurahCard({ surah, index }: { surah: SurahMeta; index: number }) {
   const { t, language } = useTranslation()
   const ruMeta = language === "ru" ? getSurahRuMeta(surah.number) : null
+  const setLastSurah = useQuranRecentStore((state) => state.setLastSurah)
 
   const displayName = ruMeta?.name ?? surah.englishName
   const displayTranslation = ruMeta?.translation ?? surah.englishNameTranslation
@@ -19,6 +21,7 @@ export function SurahCard({ surah, index }: { surah: SurahMeta; index: number })
       href={`https://quran.com/${surah.number}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => setLastSurah(surah.number)}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, delay: Math.min(index * 0.02, 0.6) }}

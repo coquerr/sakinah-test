@@ -8,7 +8,8 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Поминания после Фаджра",
     href: "https://sunnah.com/search?q=morning+remembrance+dhikr",
     icon: Sunrise,
-    tone: "accent"
+    tone: "accent",
+    group: "daily"
   },
   {
     id: "evening",
@@ -16,7 +17,8 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Поминания после Асра",
     href: "https://sunnah.com/search?q=evening+remembrance+dhikr",
     icon: Sunset,
-    tone: "primary"
+    tone: "primary",
+    group: "daily"
   },
   {
     id: "sleep",
@@ -24,7 +26,8 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Дуа перед сном",
     href: "https://sunnah.com/search?q=sleeping+dua",
     icon: Moon,
-    tone: "primary"
+    tone: "primary",
+    group: "daily"
   },
   {
     id: "home",
@@ -32,7 +35,8 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Дуа для повседневных ситуаций",
     href: "https://sunnah.com/search?q=entering+house+dua",
     icon: Home,
-    tone: "accent"
+    tone: "accent",
+    group: "everyday"
   },
   {
     id: "distress",
@@ -40,7 +44,8 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Дуа при тревоге и печали",
     href: "https://sunnah.com/search?q=grief+distress+dua",
     icon: HandHeart,
-    tone: "primary"
+    tone: "primary",
+    group: "special"
   },
   {
     id: "protection",
@@ -48,6 +53,7 @@ export const azkarCategories: ExternalResourceCategory[] = [
     description: "Дуа о защите и здоровье",
     href: "https://sunnah.com/search?q=protection+dua",
     icon: ShieldCheck,
-    tone: "accent"
+    tone: "accent",
+    group: "special"
   }
 ]

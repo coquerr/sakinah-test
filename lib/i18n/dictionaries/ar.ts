@@ -75,7 +75,38 @@ export const ar: Dictionary = {
     noResults: "لا توجد نتائج",
     searchPlaceholder: "السورة، الرقم، أو يس",
     clearSearch: "مسح البحث",
-    popularLabel: "الأكثر شيوعًا:"
+    popularLabel: "الأكثر شيوعًا:",
+    all: "الكل",
+    recentTitle: "تم فتحه مؤخرًا",
+    surahPrefix: "سورة",
+    openButton: "فتح"
+  },
+    azkar: {
+    title: "الأذكار والأدعية",
+    subtitle: "مجموعة من الأذكار والأدعية",
+    sourceNotice: "تُفتح النصوص على Sunnah.com",
+    openOnPrefix: "افتح على",
+        searchPlaceholder: "ابحث عن ذكر أو دعاء...",
+    clearSearch: "مسح البحث",
+    noResults: "لا توجد نتائج",
+        quickLabels: {
+      morning: "الصباح",
+      evening: "المساء",
+      sleep: "النوم",
+      home: "المنزل",
+      protection: "الحماية"
+    },
+        tabs: {
+      all: "الكل",
+      favorites: "المفضلة"
+    },
+    emptyFavoritesTitle: "لم تحفظ أي شيء بعد",
+    emptyFavoritesText: "اضغط على ♡ في الفئة المطلوبة لإضافتها هنا.",
+        groups: {
+      daily: "يومية",
+      everyday: "مواقف يومية",
+      special: "مناسبات خاصة"
+    }
   },
   qibla: {
     subtitle: "اتجاه الكعبة من موقعك",

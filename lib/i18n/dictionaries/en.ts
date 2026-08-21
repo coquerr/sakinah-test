@@ -75,7 +75,38 @@ export const en: Dictionary = {
     noResults: "No results found",
     searchPlaceholder: "Surah, number, or Ya-Sin",
     clearSearch: "Clear search",
-    popularLabel: "Popular:"
+    popularLabel: "Popular:",
+    all: "All",
+    recentTitle: "Recently opened",
+    surahPrefix: "Surah",
+    openButton: "Open"
+  },
+    azkar: {
+    title: "Azkar and Duas",
+    subtitle: "A collection of remembrances and supplications",
+    sourceNotice: "Texts open on Sunnah.com",
+    openOnPrefix: "Open on",
+        searchPlaceholder: "Find an azkar or dua...",
+    clearSearch: "Clear search",
+    noResults: "No results found",
+        quickLabels: {
+      morning: "Morning",
+      evening: "Evening",
+      sleep: "Sleep",
+      home: "Home",
+      protection: "Protection"
+    },
+        tabs: {
+      all: "All",
+      favorites: "Favorites"
+    },
+    emptyFavoritesTitle: "You haven't saved anything yet",
+    emptyFavoritesText: "Tap ♡ on a category to add it here.",
+        groups: {
+      daily: "Daily",
+      everyday: "Everyday situations",
+      special: "Special occasions"
+    }
   },
   qibla: {
     subtitle: "Direction to the Kaaba from your location",

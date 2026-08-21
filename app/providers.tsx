@@ -5,6 +5,8 @@ import { ReactNode, useEffect } from "react"
 import { useSettingsStore } from "@/store/settings-store"
 import { useTrackerStore } from "@/store/tracker-store"
 import { useOnboardingStore } from "@/store/onboarding-store"
+import { useQuranRecentStore } from "@/store/quran-recent-store"
+import { useAzkarFavoritesStore } from "@/store/azkar-favorites-store"
 import { getDirection } from "@/lib/i18n"
 
 function DirectionSync() {
@@ -23,6 +25,8 @@ function StoreHydration() {
     useSettingsStore.persist.rehydrate()
     useTrackerStore.persist.rehydrate()
     useOnboardingStore.persist.rehydrate()
+    useQuranRecentStore.persist.rehydrate()
+    useAzkarFavoritesStore.persist.rehydrate()
   }, [])
 
   return null

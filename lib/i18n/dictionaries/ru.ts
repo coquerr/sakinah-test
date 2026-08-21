@@ -75,7 +75,38 @@ export const ru: Dictionary = {
     noResults: "Ничего не найдено",
     searchPlaceholder: "Сура, номер или Йа Син",
     clearSearch: "Очистить поиск",
-    popularLabel: "Популярные:"
+    popularLabel: "Популярные:",
+    all: "Все",
+    recentTitle: "Недавно открывали",
+    surahPrefix: "Сура",
+    openButton: "Открыть"
+  },
+    azkar: {
+    title: "Азкары и дуа",
+    subtitle: "Подборка поминаний и дуа",
+    sourceNotice: "Тексты открываются на Sunnah.com",
+    openOnPrefix: "Открыть на",
+    searchPlaceholder: "Найти азкар или дуа...",
+    clearSearch: "Очистить поиск",
+    noResults: "Ничего не найдено",
+        quickLabels: {
+      morning: "Утро",
+      evening: "Вечер",
+      sleep: "Сон",
+      home: "Дом",
+      protection: "Защита"
+    },
+        tabs: {
+      all: "Все",
+      favorites: "Избранное"
+    },
+    emptyFavoritesTitle: "Вы ещё ничего не сохранили",
+    emptyFavoritesText: "Нажмите ♡ на нужной категории, чтобы добавить её сюда.",
+    groups: {
+      daily: "Ежедневные",
+      everyday: "Повседневные ситуации",
+      special: "Особые случаи"
+    }
   },
   qibla: {
     subtitle: "Направление на Каабу от вашего местоположения",

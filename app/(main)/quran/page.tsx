@@ -1,6 +1,7 @@
 "use client"
 
 import { SurahList } from "@/components/quran/surah-list"
+import { RecentSurahCard } from "@/components/quran/recent-surah-card"
 import { ExternalSourceNotice } from "@/components/shared/external-source-notice"
 import { useTranslation } from "@/hooks/use-translation"
 
@@ -17,6 +18,8 @@ export default function QuranPage() {
           114 {t("quran.surahsCount")} · {t("quran.readOnPrefix")} Quran.com
         </p>
       </div>
+
+      <RecentSurahCard />
 
       <SurahList />
 

@@ -7,15 +7,32 @@ import { SurahCard } from "@/components/quran/surah-card"
 import { matchesSurahQuery } from "@/lib/utils/surah-search"
 import { getSurahRuMeta } from "@/lib/constants/surah-ru-meta"
 import { useTranslation } from "@/hooks/use-translation"
+import { cn } from "@/lib/utils/cn"
 
 const POPULAR_SURAH_NUMBERS = [1, 36, 67, 18]
+
+type RevelationFilter = "all" | "Meccan" | "Medinan"
+
+const NUMBER_RANGES: { label: string; min: number; max: number }[] = [
+  { label: "1–30", min: 1, max: 30 },
+  { label: "31–60", min: 31, max: 60 },
+  { label: "61–90", min: 61, max: 90 },
+  { label: "91–114", min: 91, max: 114 }
+]
 
 export function SurahList() {
   const { surahs, loading } = useSurahList()
   const [query, setQuery] = useState("")
+  const [revelationFilter, setRevelationFilter] = useState<RevelationFilter>("all")
+  const [rangeFilter, setRangeFilter] = useState<{ min: number; max: number } | null>(null)
   const { t } = useTranslation()
 
-  const filtered = surahs.filter((surah) => matchesSurahQuery(surah, query))
+  const filtered = surahs.filter((surah) => {
+    if (!matchesSurahQuery(surah, query)) return false
+    if (revelationFilter !== "all" && surah.revelationType !== revelationFilter) return false
+    if (rangeFilter && (surah.number < rangeFilter.min || surah.number > rangeFilter.max)) return false
+    return true
+  })
 
   if (loading) {
     return (
@@ -24,6 +41,12 @@ export function SurahList() {
       </div>
     )
   }
+
+  const revelationChips: { value: RevelationFilter; label: string }[] = [
+    { value: "all", label: t("quran.all") },
+    { value: "Meccan", label: t("quran.meccan") },
+    { value: "Medinan", label: t("quran.medinan") }
+  ]
 
   return (
     <div>
@@ -62,6 +85,45 @@ export function SurahList() {
               className="rounded-full border border-border/60 bg-surface px-3 py-1.5 text-xs text-foreground transition-colors hover:border-primary/30 hover:bg-surface-hover"
             >
               {ruMeta.name}
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+        {revelationChips.map((chip) => (
+          <button
+            key={chip.value}
+            onClick={() => setRevelationFilter(chip.value)}
+            className={cn(
+              "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
+              revelationFilter === chip.value
+                ? "border-primary/30 bg-primary/10 text-primary"
+                : "border-border/60 bg-surface text-muted-foreground hover:bg-surface-hover"
+            )}
+          >
+            {chip.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+        {NUMBER_RANGES.map((range) => {
+          const isActive =
+            rangeFilter?.min === range.min && rangeFilter?.max === range.max
+
+          return (
+            <button
+              key={range.label}
+              onClick={() => setRangeFilter(isActive ? null : { min: range.min, max: range.max })}
+              className={cn(
+                "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium tabular-nums transition-colors",
+                isActive
+                  ? "border-primary/30 bg-primary/10 text-primary"
+                  : "border-border/60 bg-surface text-muted-foreground hover:bg-surface-hover"
+              )}
+            >
+              {range.label}
             </button>
           )
         })}

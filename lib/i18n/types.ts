@@ -11,7 +11,7 @@ export interface Dictionary {
     qibla: string
     profile: string
   }
-  quran: {
+    quran: {
     title: string
     surahsCount: string
     readOnPrefix: string
@@ -23,6 +23,37 @@ export interface Dictionary {
     searchPlaceholder: string
     clearSearch: string
     popularLabel: string
+    all: string
+    recentTitle: string
+    surahPrefix: string
+    openButton: string
+  }
+     azkar: {
+    title: string
+    subtitle: string
+    sourceNotice: string
+    openOnPrefix: string
+    searchPlaceholder: string
+    clearSearch: string
+    noResults: string
+    groups: {
+      daily: string
+      everyday: string
+      special: string
+    }
+    quickLabels: {
+      morning: string
+      evening: string
+      sleep: string
+      home: string
+      protection: string
+    }
+    tabs: {
+      all: string
+      favorites: string
+    }
+    emptyFavoritesTitle: string
+    emptyFavoritesText: string
   }
   settings: {
     languageTitle: string
