@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useSettingsStore } from "@/store/settings-store"
 
-const FALLBACK_COORDINATES = { latitude: 21.4225, longitude: 39.8262, label: "Мекка" }
+const FALLBACK_COORDINATES = { latitude: 42.9849, longitude: 47.5047, label: "Махачкала" }
 
 export function useGeolocation() {
   const coordinates = useSettingsStore((state) => state.coordinates)

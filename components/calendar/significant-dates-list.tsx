@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { Star } from "lucide-react"
 import { CalendarDay } from "@/types/calendar"
 import { useTranslation } from "@/hooks/use-translation"
 
@@ -21,14 +22,17 @@ export function SignificantDatesList({ days }: { days: CalendarDay[] }) {
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
-          className="flex items-center justify-between rounded-xl border border-border/60 bg-surface px-4 py-3 shadow-card"
+          className="flex items-center gap-3 rounded-xl border border-border/60 bg-surface px-4 py-3 shadow-card"
         >
-          <span className="text-sm text-foreground">
-            {day.significantLabel ? t(day.significantLabel) : ""}
-          </span>
-          <span className="text-xs tabular-nums text-muted-foreground">
-            {day.hijri.day} {day.hijri.monthName}
-          </span>
+          <Star size={14} className="shrink-0 fill-accent text-accent" />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs tabular-nums text-muted-foreground">
+              {day.hijri.day} {day.hijri.monthName}
+            </p>
+            <p className="mt-0.5 truncate text-sm font-medium text-foreground">
+              {day.significantLabel ? t(day.significantLabel) : ""}
+            </p>
+          </div>
         </motion.div>
       ))}
     </div>

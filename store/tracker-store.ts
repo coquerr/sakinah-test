@@ -9,6 +9,7 @@ interface TrackerState {
   days: Record<string, DayTracker>
   dirtyDates: string[]
   toggleStatus: (dateKey: string, prayer: PrayerName, status: TrackerStatus) => void
+  setStatus: (dateKey: string, prayer: PrayerName, status: TrackerStatus) => void
   getDay: (dateKey: string) => DayTracker
   clearDirtyDates: (dates: string[]) => void
 }
@@ -27,6 +28,20 @@ export const useTrackerStore = create<TrackerState>()(
             days: {
               ...state.days,
               [dateKey]: { ...currentDay, [prayer]: nextStatus }
+            },
+            dirtyDates: state.dirtyDates.includes(dateKey)
+              ? state.dirtyDates
+              : [...state.dirtyDates, dateKey]
+          }
+        }),
+      setStatus: (dateKey, prayer, status) =>
+        set((state) => {
+          const currentDay = state.days[dateKey] ?? {}
+
+          return {
+            days: {
+              ...state.days,
+              [dateKey]: { ...currentDay, [prayer]: status }
             },
             dirtyDates: state.dirtyDates.includes(dateKey)
               ? state.dirtyDates

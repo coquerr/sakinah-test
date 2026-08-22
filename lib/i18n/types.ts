@@ -28,7 +28,7 @@ export interface Dictionary {
     surahPrefix: string
     openButton: string
   }
-     azkar: {
+  azkar: {
     title: string
     subtitle: string
     sourceNotice: string
@@ -54,6 +54,13 @@ export interface Dictionary {
     }
     emptyFavoritesTitle: string
     emptyFavoritesText: string
+    now: {
+      morningTitle: string
+      morningText: string
+      eveningTitle: string
+      eveningText: string
+      openLabel: string
+    }
   }
   settings: {
     languageTitle: string
@@ -145,6 +152,8 @@ export interface Dictionary {
     prevMonth: string
     nextMonth: string
     significantDatesTitle: string
+    currentMonthLabel: string
+    jumpToTodayLabel: string
     dates: {
       ashura: string
       mawlid: string
@@ -161,9 +170,25 @@ export interface Dictionary {
     calendar: string
     stats: string
   }
-  profile: {
+    profile: {
     quickLinksLabel: string
     settingsLabel: string
+    greeting: string
+    todayLabel: string
+    prayersLabel: string
+    dailyGoalSuffix: string
+    streakLabel: string
+    streakSubtitle: string
+    trackerStatus: {
+      done: string
+      missed: string
+      pending: string
+    }
+    appearanceTitle: string
+    appearanceSystem: string
+    appearanceDark: string
+    privacyTitle: string
+    privacyText: string
   }
   stats: {
     title: string
@@ -175,6 +200,15 @@ export interface Dictionary {
     percentLabel: string
     doneLabel: string
     missedLabel: string
+    notMarkedLabel: string
+    totalLabel: string
+    completionLabel: string
+    completedLabel: string
+    byPrayerTitle: string
+    bestDayTitle: string
+    averageTitle: string
+    prayersUnit: string
+    heatmapHint: string
   }
   calculationMethods: {
     muslimWorldLeague: string

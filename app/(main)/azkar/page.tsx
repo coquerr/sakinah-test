@@ -3,6 +3,7 @@
 import { ArrowUpRight } from "lucide-react"
 import { AzkarHubLink } from "@/components/azkar/azkar-hub-link"
 import { AzkarList } from "@/components/azkar/azkar-list"
+import { AzkarNowRecommendation } from "@/components/azkar/azkar-now-recommendation"
 import { useTranslation } from "@/hooks/use-translation"
 
 export default function AzkarPage() {
@@ -26,6 +27,7 @@ export default function AzkarPage() {
         </a>
       </div>
 
+      <AzkarNowRecommendation />
       <AzkarHubLink />
       <AzkarList />
     </section>

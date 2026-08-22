@@ -59,14 +59,18 @@ export function RangeSummary({ range, onRangeChange, stats }: RangeSummaryProps)
           </span>
           <p className="mt-1 text-xs text-muted-foreground">{t("stats.percentLabel")}</p>
         </div>
-        <div className="text-right">
+        <div className="space-y-1 text-right">
           <p className="text-sm tabular-nums text-foreground">
             {stats.doneCount}{" "}
             <span className="text-xs text-muted-foreground">{t("stats.doneLabel")}</span>
           </p>
-          <p className="mt-1 text-sm tabular-nums text-foreground">
+          <p className="text-sm tabular-nums text-foreground">
             {stats.missedCount}{" "}
             <span className="text-xs text-muted-foreground">{t("stats.missedLabel")}</span>
+          </p>
+          <p className="text-sm tabular-nums text-muted-foreground">
+            {stats.notMarkedCount}{" "}
+            <span className="text-xs text-muted-foreground">{t("stats.notMarkedLabel")}</span>
           </p>
         </div>
       </motion.div>

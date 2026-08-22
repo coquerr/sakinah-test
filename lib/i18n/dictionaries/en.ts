@@ -106,6 +106,13 @@ export const en: Dictionary = {
       daily: "Daily",
       everyday: "Everyday situations",
       special: "Special occasions"
+    },
+        now: {
+      morningTitle: "It's morning",
+      morningText: "Don't forget your morning azkar",
+      eveningTitle: "It's evening",
+      eveningText: "Time for evening azkar",
+      openLabel: "Open"
     }
   },
   qibla: {
@@ -144,7 +151,9 @@ export const en: Dictionary = {
     today: "Today",
     prevMonth: "Previous month",
     nextMonth: "Next month",
+    currentMonthLabel: "Current month",
     significantDatesTitle: "Significant dates this month",
+    jumpToTodayLabel: "Jump to today",
     dates: {
       ashura: "Ashura",
       mawlid: "Mawlid an-Nabi",
@@ -161,10 +170,26 @@ export const en: Dictionary = {
     calendar: "Islamic calendar",
     stats: "Statistics"
   },
-  profile: {
-     quickLinksLabel: "Sections",
-     settingsLabel: "Settings"
-   },
+    profile: {
+    quickLinksLabel: "Sections",
+    settingsLabel: "Settings",
+    greeting: "Assalamu alaikum",
+    todayLabel: "Today",
+    prayersLabel: "prayers completed",
+    dailyGoalSuffix: "of daily goal",
+    streakLabel: "Streak",
+    streakSubtitle: "Prayers tracked every day",
+    trackerStatus: {
+      done: "Done",
+      missed: "Missed",
+      pending: "Not marked"
+    },
+    appearanceTitle: "Appearance",
+    appearanceSystem: "System",
+    appearanceDark: "Dark",
+    privacyTitle: "Privacy",
+    privacyText: "Data is stored locally on your device"
+  },
   stats: {
     title: "Statistics",
     streakTitle: "Day streak",
@@ -174,7 +199,16 @@ export const en: Dictionary = {
     rangeMonth: "Month",
     percentLabel: "Completed",
     doneLabel: "Done",
-    missedLabel: "Missed"
+    missedLabel: "Missed",
+    notMarkedLabel: "Not marked",
+    totalLabel: "Total",
+    completionLabel: "Completion",
+    completedLabel: "Prayers completed",
+    byPrayerTitle: "Completion by prayer",
+    bestDayTitle: "Best day",
+    averageTitle: "Daily average",
+    prayersUnit: "prayers",
+    heatmapHint: "Brighter means more prayers completed that day"
   },
   calculationMethods: {
     muslimWorldLeague: "Muslim World League",

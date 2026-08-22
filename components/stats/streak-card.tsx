@@ -3,12 +3,14 @@
 import { motion } from "framer-motion"
 import { Flame } from "lucide-react"
 import { useTranslation } from "@/hooks/use-translation"
+import { RangeStats } from "@/lib/utils/tracker-stats"
 
 interface StreakCardProps {
   streak: number
+  summary?: RangeStats
 }
 
-export function StreakCard({ streak }: StreakCardProps) {
+export function StreakCard({ streak, summary }: StreakCardProps) {
   const { t } = useTranslation()
   const unit = streak === 1 ? t("stats.streakDayOne") : t("stats.streakDays")
 
@@ -31,6 +33,29 @@ export function StreakCard({ streak }: StreakCardProps) {
       <span className="relative mt-3 text-xs uppercase tracking-wide text-muted-foreground">
         {t("stats.streakTitle")}
       </span>
+
+      {summary && (
+        <div className="relative mt-6 grid w-full grid-cols-3 divide-x divide-border-subtle border-t border-border-subtle pt-5">
+          <div>
+            <span className="text-lg font-semibold tabular-nums text-foreground">
+              {summary.doneCount}
+            </span>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{t("stats.doneLabel")}</p>
+          </div>
+          <div>
+            <span className="text-lg font-semibold tabular-nums text-foreground">
+              {summary.donePercentage}%
+            </span>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{t("stats.completionLabel")}</p>
+          </div>
+          <div>
+            <span className="text-lg font-semibold tabular-nums text-foreground">
+              {summary.totalPossible}
+            </span>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{t("stats.totalLabel")}</p>
+          </div>
+        </div>
+      )}
     </motion.div>
   )
 }

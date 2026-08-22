@@ -106,6 +106,13 @@ export const ar: Dictionary = {
       daily: "يومية",
       everyday: "مواقف يومية",
       special: "مناسبات خاصة"
+    },
+        now: {
+      morningTitle: "الوقت صباح",
+      morningText: "لا تنس أذكار الصباح",
+      eveningTitle: "الوقت مساء",
+      eveningText: "حان وقت أذكار المساء",
+      openLabel: "فتح"
     }
   },
   qibla: {
@@ -144,7 +151,9 @@ export const ar: Dictionary = {
     today: "اليوم",
     prevMonth: "الشهر السابق",
     nextMonth: "الشهر التالي",
+    currentMonthLabel: "الشهر الحالي",
     significantDatesTitle: "المناسبات المهمة هذا الشهر",
+    jumpToTodayLabel: "الانتقال إلى اليوم",
     dates: {
       ashura: "عاشوراء",
       mawlid: "المولد النبوي",
@@ -161,10 +170,26 @@ export const ar: Dictionary = {
     calendar: "التقويم الهجري",
     stats: "الإحصائيات"
   },
-  profile: {
-     quickLinksLabel: "الأقسام",
-     settingsLabel: "الإعدادات"
-   },
+    profile: {
+    quickLinksLabel: "الأقسام",
+    settingsLabel: "الإعدادات",
+    greeting: "السلام عليكم",
+    todayLabel: "اليوم",
+    prayersLabel: "صلوات مكتملة",
+    dailyGoalSuffix: "من الهدف اليومي",
+    streakLabel: "سلسلة",
+    streakSubtitle: "تم تسجيل الصلوات كل يوم",
+    trackerStatus: {
+      done: "تم الأداء",
+      missed: "فائتة",
+      pending: "غير محدد"
+    },
+    appearanceTitle: "المظهر",
+    appearanceSystem: "النظام",
+    appearanceDark: "داكن",
+    privacyTitle: "الخصوصية",
+    privacyText: "تُخزَّن البيانات محليًا على جهازك"
+  },
   stats: {
     title: "الإحصائيات",
     streakTitle: "أيام متتالية",
@@ -174,7 +199,16 @@ export const ar: Dictionary = {
     rangeMonth: "الشهر",
     percentLabel: "مكتمل",
     doneLabel: "تم",
-    missedLabel: "فائتة"
+    missedLabel: "فائتة",
+    notMarkedLabel: "غير محدد",
+    totalLabel: "الإجمالي",
+    completionLabel: "الإنجاز",
+    completedLabel: "عدد الصلوات المكتملة",
+    byPrayerTitle: "الإنجاز حسب الصلاة",
+    bestDayTitle: "أفضل يوم",
+    averageTitle: "المعدل اليومي",
+    prayersUnit: "صلوات",
+    heatmapHint: "كلما زاد السطوع، زاد عدد الصلوات المكتملة في ذلك اليوم"
   },
   calculationMethods: {
     muslimWorldLeague: "رابطة العالم الإسلامي",

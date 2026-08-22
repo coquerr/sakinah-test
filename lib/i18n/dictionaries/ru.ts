@@ -106,6 +106,13 @@ export const ru: Dictionary = {
       daily: "Ежедневные",
       everyday: "Повседневные ситуации",
       special: "Особые случаи"
+    },
+    now: {
+      morningTitle: "Сейчас утро",
+      morningText: "Не забудьте утренние азкары",
+      eveningTitle: "Сейчас вечер",
+      eveningText: "Время вечерних азкаров",
+      openLabel: "Открыть"
     }
   },
   qibla: {
@@ -144,7 +151,9 @@ export const ru: Dictionary = {
     today: "Сегодня",
     prevMonth: "Предыдущий месяц",
     nextMonth: "Следующий месяц",
+    currentMonthLabel: "Текущий месяц",
     significantDatesTitle: "Важные даты месяца",
+    jumpToTodayLabel: "К сегодня",
     dates: {
       ashura: "Ашура",
       mawlid: "Маулид ан-Наби",
@@ -161,10 +170,26 @@ export const ru: Dictionary = {
     calendar: "Исламский календарь",
     stats: "Статистика"
   },
-  profile: {
-     quickLinksLabel: "Разделы",
-     settingsLabel: "Настройки"
-   },
+    profile: {
+    quickLinksLabel: "Разделы",
+    settingsLabel: "Настройки",
+    greeting: "Ассаляму алейкум",
+    todayLabel: "Сегодня",
+    prayersLabel: "намазов выполнено",
+    dailyGoalSuffix: "дневной цели",
+    streakLabel: "Серия",
+    streakSubtitle: "Намазы отмечались каждый день",
+    trackerStatus: {
+      done: "Выполнен",
+      missed: "Пропущен",
+      pending: "Не отмечен"
+    },
+    appearanceTitle: "Внешний вид",
+    appearanceSystem: "Системная",
+    appearanceDark: "Тёмная",
+    privacyTitle: "Конфиденциальность",
+    privacyText: "Данные хранятся локально на устройстве"
+  },
   stats: {
     title: "Статистика",
     streakTitle: "Дней подряд",
@@ -174,7 +199,16 @@ export const ru: Dictionary = {
     rangeMonth: "Месяц",
     percentLabel: "Выполнено",
     doneLabel: "Выполнено",
-    missedLabel: "Пропущено"
+    missedLabel: "Пропущено",
+    notMarkedLabel: "Не отмечено",
+    totalLabel: "Всего",
+    completionLabel: "Выполнение",
+    completedLabel: "Количество выполненных намазов",
+    byPrayerTitle: "Выполнение по намазам",
+    bestDayTitle: "Лучший день",
+    averageTitle: "Среднее за день",
+    prayersUnit: "намазов",
+    heatmapHint: "Ярче — больше выполненных намазов в этот день"
   },
   calculationMethods: {
     muslimWorldLeague: "Muslim World League",

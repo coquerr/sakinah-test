@@ -3,9 +3,22 @@
 import { motion } from "framer-motion"
 import { HijriDate } from "@/types/calendar"
 import { useTranslation } from "@/hooks/use-translation"
+import { localeMap } from "@/lib/i18n"
 
-export function HijriHeader({ hijri }: { hijri: HijriDate }) {
-  const { t } = useTranslation()
+interface HijriHeaderProps {
+  hijri: HijriDate
+  gregorianDate: Date
+}
+
+export function HijriHeader({ hijri, gregorianDate }: HijriHeaderProps) {
+  const { t, language } = useTranslation()
+  const locale = localeMap[language]
+
+  const gregorianLabel = gregorianDate.toLocaleDateString(locale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  })
 
   return (
     <motion.div
@@ -19,7 +32,8 @@ export function HijriHeader({ hijri }: { hijri: HijriDate }) {
       <span className="relative text-xs uppercase tracking-wide text-muted-foreground">
         {t("calendar.today")}
       </span>
-      <span className="relative mt-2 font-heading text-3xl font-semibold tracking-tight text-primary">
+      <span className="relative mt-2 text-sm text-foreground">{gregorianLabel}</span>
+      <span className="relative mt-1 font-heading text-3xl font-semibold tracking-tight text-primary">
         <span className="tabular-nums">{hijri.day}</span> {hijri.monthName}
       </span>
       <span className="relative mt-1 text-sm text-muted-foreground">
