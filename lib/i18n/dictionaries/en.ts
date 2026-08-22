@@ -190,6 +190,10 @@ export const en: Dictionary = {
     privacyTitle: "Privacy",
     privacyText: "Data is stored locally on your device"
   },
+  privacyBanner: {
+    text: "Sakinah stores your settings locally on this device. Nothing is sent to a server.",
+    dismiss: "Got it"
+  },
   stats: {
     title: "Statistics",
     streakTitle: "Day streak",

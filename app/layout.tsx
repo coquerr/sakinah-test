@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Onest, Lora, Noto_Naskh_Arabic } from "next/font/google"
 import { Providers } from "./providers"
 import { ServiceWorkerRegister } from "@/components/pwa/sw-register"
+import { LocalDataNotice } from "@/components/shared/local-data-notice"
 import "./globals.css"
 
 const sans = Onest({
@@ -55,7 +56,10 @@ export default function RootLayout({
       <body
         className={`${sans.variable} ${heading.variable} ${arabic.variable} font-sans antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <LocalDataNotice />
+        </Providers>
         <ServiceWorkerRegister />
       </body>
     </html>

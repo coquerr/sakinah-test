@@ -190,6 +190,10 @@ export const ar: Dictionary = {
     privacyTitle: "الخصوصية",
     privacyText: "تُخزَّن البيانات محليًا على جهازك"
   },
+  privacyBanner: {
+    text: "يحفظ سكينة إعداداتك محليًا على هذا الجهاز. لا يتم إرسال أي شيء إلى الخادم.",
+    dismiss: "فهمت"
+  },
   stats: {
     title: "الإحصائيات",
     streakTitle: "أيام متتالية",

@@ -1,5 +1,3 @@
-import { LucideIcon } from "lucide-react"
-
 export interface Dictionary {
   common: {
     appName: string
@@ -189,6 +187,10 @@ export interface Dictionary {
     appearanceDark: string
     privacyTitle: string
     privacyText: string
+  }
+  privacyBanner: {
+    text: string
+    dismiss: string
   }
   stats: {
     title: string

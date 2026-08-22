@@ -190,6 +190,10 @@ export const ru: Dictionary = {
     privacyTitle: "Конфиденциальность",
     privacyText: "Данные хранятся локально на устройстве"
   },
+    privacyBanner: {
+    text: "Sakinah сохраняет ваши настройки локально на этом устройстве. Ничего не передаётся на сервер.",
+    dismiss: "Понятно"
+  },
   stats: {
     title: "Статистика",
     streakTitle: "Дней подряд",

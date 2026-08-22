@@ -5,6 +5,13 @@ export interface GeocodingResult {
   longitude: number
 }
 
+interface OpenMeteoGeocodingItem {
+  name: string
+  country?: string
+  latitude: number
+  longitude: number
+}
+
 export async function searchCities(query: string, language: string = "ru"): Promise<GeocodingResult[]> {
   if (query.trim().length < 2) return []
 
@@ -18,7 +25,7 @@ export async function searchCities(query: string, language: string = "ru"): Prom
 
   if (!data.results) return []
 
-  return data.results.map((item: any) => ({
+  return data.results.map((item: OpenMeteoGeocodingItem) => ({
     name: item.name,
     country: item.country ?? "",
     latitude: item.latitude,
