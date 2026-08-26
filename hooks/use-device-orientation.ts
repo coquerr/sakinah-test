@@ -41,22 +41,38 @@ export function useDeviceOrientation(): OrientationState {
     "unknown"
   )
 
-  useEffect(() => {
-    if (typeof DeviceOrientationEvent === "undefined") {
-      setPermissionState("unsupported")
-      return
+  // 1. Выносим обработчик в отдельную функцию, чтобы избежать дублирования
+  const handleOrientation = (event: Event) => {
+    const compassEvent = event as CompassOrientationEvent
+    let currentHeading: number | null = null
+
+    // Считываем направление
+    if (typeof compassEvent.webkitCompassHeading === "number") {
+      // iOS
+      currentHeading = compassEvent.webkitCompassHeading
+    } else if (compassEvent.alpha !== null) {
+      // Android
+      currentHeading = (360 - compassEvent.alpha) % 360
     }
 
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      const compassEvent = event as CompassOrientationEvent
+    // 2. Обязательно корректируем угол на поворот экрана
+    if (currentHeading !== null) {
+      const screenOrientation =
+        typeof window.orientation === "number"
+          ? window.orientation
+          : window.screen?.orientation?.angle || 0
 
-      if (typeof compassEvent.webkitCompassHeading === "number") {
-        setHeading(compassEvent.webkitCompassHeading)
-      } else if (event.alpha !== null) {
-        setHeading(360 - event.alpha)
-      }
+      currentHeading = (currentHeading + screenOrientation + 360) % 360
+      setHeading(currentHeading)
+    }
 
-      setAccuracy(resolveAccuracy(compassEvent))
+    setAccuracy(resolveAccuracy(compassEvent))
+  }
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof DeviceOrientationEvent === "undefined") {
+      setPermissionState("unsupported")
+      return
     }
 
     const eventConstructor = DeviceOrientationEvent as DeviceOrientationEventWithPermission
@@ -65,10 +81,15 @@ export function useDeviceOrientation(): OrientationState {
       return
     }
 
-    window.addEventListener("deviceorientation", handleOrientation)
+    // 3. Для Android проверяем поддержку абсолютных значений (для истинного компаса)
+    const eventName = "ondeviceorientationabsolute" in window 
+      ? "deviceorientationabsolute" 
+      : "deviceorientation"
+
+    window.addEventListener(eventName, handleOrientation)
     setPermissionState("granted")
 
-    return () => window.removeEventListener("deviceorientation", handleOrientation)
+    return () => window.removeEventListener(eventName, handleOrientation)
   }, [])
 
   const requestPermission = async () => {
@@ -84,18 +105,8 @@ export function useDeviceOrientation(): OrientationState {
 
       if (result === "granted") {
         setPermissionState("granted")
-
-        window.addEventListener("deviceorientation", (event) => {
-          const compassEvent = event as CompassOrientationEvent
-
-          if (typeof compassEvent.webkitCompassHeading === "number") {
-            setHeading(compassEvent.webkitCompassHeading)
-          } else if (event.alpha !== null) {
-            setHeading(360 - event.alpha)
-          }
-
-          setAccuracy(resolveAccuracy(compassEvent))
-        })
+        // iOS 13+ всегда использует standard deviceorientation
+        window.addEventListener("deviceorientation", handleOrientation)
       } else {
         setPermissionState("denied")
       }
