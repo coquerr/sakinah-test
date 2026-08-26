@@ -23,8 +23,18 @@ export function buildPrayerTimes(
 }
 
 export function getNextPrayer(entries: PrayerTimeEntry[], now: Date): PrayerTimeEntry {
+  // Ищем следующий намаз в сегодняшнем расписании
   const upcoming = entries.find((entry) => entry.time.getTime() > now.getTime())
-  return upcoming ?? entries[0]
+  
+  if (upcoming) {
+    return upcoming
+  }
+  const tomorrowFajrTime = new Date(entries[0].time.getTime() + 24 * 60 * 60 * 1000)
+
+  return {
+    ...entries[0],
+    time: tomorrowFajrTime
+  }
 }
 
 export function getCurrentPrayerIndex(entries: PrayerTimeEntry[], now: Date): number {
