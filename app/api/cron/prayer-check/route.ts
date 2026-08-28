@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
-import webpush from '@/lib/push';
+import { configureWebPush } from '@/lib/push';
 
 export async function GET(request: Request) {
   // Защищаем роут, чтобы никто чужой не мог запустить рассылку
   const authHeader = request.headers.get('authorization');
+  const webpush = configureWebPush();
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
