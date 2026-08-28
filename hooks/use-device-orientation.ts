@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 export type CompassAccuracy = "high" | "medium" | "low" | "unknown"
 
@@ -11,109 +11,112 @@ interface OrientationState {
   requestPermission: () => Promise<void>
 }
 
-type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
-  requestPermission?: () => Promise<"granted" | "denied">
-}
-
-type CompassOrientationEvent = DeviceOrientationEvent & {
-  webkitCompassHeading?: number
-  webkitCompassAccuracy?: number
-}
-
-function resolveAccuracy(event: CompassOrientationEvent): CompassAccuracy {
-  if (typeof event.webkitCompassAccuracy === "number") {
-    if (event.webkitCompassAccuracy < 0) return "unknown"
-    if (event.webkitCompassAccuracy <= 15) return "high"
-    if (event.webkitCompassAccuracy <= 50) return "medium"
-    return "low"
-  }
-
-  if (event.absolute === true) return "high"
-  if (event.alpha !== null) return "medium"
-
-  return "unknown"
-}
-
 export function useDeviceOrientation(): OrientationState {
   const [heading, setHeading] = useState<number | null>(null)
   const [accuracy, setAccuracy] = useState<CompassAccuracy>("unknown")
-  const [permissionState, setPermissionState] = useState<OrientationState["permissionState"]>(
-    "unknown"
-  )
+  const [permissionState, setPermissionState] = useState<OrientationState["permissionState"]>("unknown")
 
-  // 1. Выносим обработчик в отдельную функцию, чтобы избежать дублирования
-  const handleOrientation = (event: Event) => {
-    const compassEvent = event as CompassOrientationEvent
+  const handleOrientation = useCallback((event: any) => {
     let currentHeading: number | null = null
+    let currentAccuracy: CompassAccuracy = "unknown"
 
-    // Считываем направление
-    if (typeof compassEvent.webkitCompassHeading === "number") {
-      // iOS
-      currentHeading = compassEvent.webkitCompassHeading
-    } else if (compassEvent.alpha !== null) {
-      // Android
-      currentHeading = (360 - compassEvent.alpha) % 360
+    // 1. iOS: использует webkitCompassHeading
+    if (typeof event.webkitCompassHeading === "number") {
+      currentHeading = event.webkitCompassHeading
+      const acc = event.webkitCompassAccuracy ?? -1
+      if (acc < 0) currentAccuracy = "unknown"
+      else if (acc <= 15) currentAccuracy = "high"
+      else if (acc <= 50) currentAccuracy = "medium"
+      else currentAccuracy = "low"
+    }
+    // 2. Android: отдает alpha (0 = Север, идет против часовой)
+    else if (event.alpha !== null) {
+      // Для Android истинный север доступен, если событие absolute
+      if (event.type === "deviceorientationabsolute" || event.absolute) {
+        currentHeading = (360 - event.alpha) % 360
+        currentAccuracy = "high"
+      } else {
+        // Обычный компас (может требовать калибровки восьмеркой)
+        currentHeading = (360 - event.alpha) % 360
+        currentAccuracy = "low"
+      }
     }
 
-    // 2. Обязательно корректируем угол на поворот экрана
+    // Обновляем стейт только если удалось извлечь реальный угол
     if (currentHeading !== null) {
-      const screenOrientation =
-        typeof window.orientation === "number"
-          ? window.orientation
-          : window.screen?.orientation?.angle || 0
+      // Корректировка на поворот экрана (портрет/ландшафт)
+      let screenAngle = 0
+      if (typeof window.screen?.orientation?.angle === "number") {
+        screenAngle = window.screen.orientation.angle
+      } else if (typeof window.orientation === "number") {
+        screenAngle = window.orientation
+      }
 
-      currentHeading = (currentHeading + screenOrientation + 360) % 360
+      // Итоговый угол поворота телефона
+      currentHeading = (currentHeading + screenAngle + 360) % 360
+      
       setHeading(currentHeading)
+      setAccuracy(currentAccuracy)
     }
+  }, [])
 
-    setAccuracy(resolveAccuracy(compassEvent))
-  }
+  const startListening = useCallback(() => {
+    if (typeof window === "undefined") return
+    
+    // Подписываемся на оба события, браузер сам пришлет нужное
+    window.addEventListener("deviceorientationabsolute", handleOrientation, true)
+    window.addEventListener("deviceorientation", handleOrientation, true)
+  }, [handleOrientation])
 
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof DeviceOrientationEvent === "undefined") {
+  const requestPermission = useCallback(async () => {
+    if (typeof window === "undefined" || !window.DeviceOrientationEvent) {
       setPermissionState("unsupported")
       return
     }
 
-    const eventConstructor = DeviceOrientationEvent as DeviceOrientationEventWithPermission
+    const EventConstructor = window.DeviceOrientationEvent as any
 
-    if (typeof eventConstructor.requestPermission === "function") {
-      return
-    }
-
-    // 3. Для Android проверяем поддержку абсолютных значений (для истинного компаса)
-    const eventName = "ondeviceorientationabsolute" in window 
-      ? "deviceorientationabsolute" 
-      : "deviceorientation"
-
-    window.addEventListener(eventName, handleOrientation)
-    setPermissionState("granted")
-
-    return () => window.removeEventListener(eventName, handleOrientation)
-  }, [])
-
-  const requestPermission = async () => {
-    const eventConstructor = DeviceOrientationEvent as DeviceOrientationEventWithPermission
-
-    if (typeof eventConstructor.requestPermission !== "function") {
-      setPermissionState("granted")
-      return
-    }
-
-    try {
-      const result = await eventConstructor.requestPermission()
-
-      if (result === "granted") {
-        setPermissionState("granted")
-        // iOS 13+ всегда использует standard deviceorientation
-        window.addEventListener("deviceorientation", handleOrientation)
-      } else {
+    // Для iOS 13+ (требует разрешения)
+    if (typeof EventConstructor.requestPermission === "function") {
+      try {
+        const permission = await EventConstructor.requestPermission()
+        if (permission === "granted") {
+          setPermissionState("granted")
+          startListening()
+        } else {
+          setPermissionState("denied")
+        }
+      } catch (error) {
         setPermissionState("denied")
       }
-    } catch {
-      setPermissionState("denied")
+    } else {
+      // Android / старые браузеры
+      setPermissionState("granted")
+      startListening()
     }
-  }
+  }, [startListening])
+
+  // Автоматический старт для Android при загрузке страницы
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    
+    if (!window.DeviceOrientationEvent) {
+      setPermissionState("unsupported")
+      return
+    }
+
+    const EventConstructor = window.DeviceOrientationEvent as any
+    // Если браузер Android (не требует клика), запускаем сразу
+    if (typeof EventConstructor.requestPermission !== "function") {
+      setPermissionState("granted")
+      startListening()
+    }
+
+    return () => {
+      window.removeEventListener("deviceorientationabsolute", handleOrientation, true)
+      window.removeEventListener("deviceorientation", handleOrientation, true)
+    }
+  }, [handleOrientation, startListening])
 
   return { heading, accuracy, permissionState, requestPermission }
 }
