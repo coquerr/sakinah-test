@@ -1,7 +1,8 @@
 "use client"
 
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
+import { idbStorage } from "@/lib/idb-storage"
 
 interface OnboardingState {
   hasSeenOnboarding: boolean
@@ -14,6 +15,8 @@ export const useOnboardingStore = create<OnboardingState>()(
       hasSeenOnboarding: false,
       completeOnboarding: () => set({ hasSeenOnboarding: true })
     }),
-    { name: "sakinah-onboarding", skipHydration: true }
+    { name: "sakinah-onboarding", skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
+     }
   )
 )

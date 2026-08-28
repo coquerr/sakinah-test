@@ -3,6 +3,7 @@ import { Onest, Lora, Noto_Naskh_Arabic } from "next/font/google"
 import { Providers } from "./providers"
 import { ServiceWorkerRegister } from "@/components/pwa/sw-register"
 import { LocalDataNotice } from "@/components/shared/local-data-notice"
+import { PwaUpdater } from "@/components/pwa-updater"
 import "./globals.css"
 
 const sans = Onest({
@@ -59,6 +60,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <LocalDataNotice />
+          <PwaUpdater />
         </Providers>
         <ServiceWorkerRegister />
       </body>

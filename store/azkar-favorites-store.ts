@@ -1,5 +1,6 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
+import { idbStorage } from "@/lib/idb-storage"
 
 interface AzkarFavoritesState {
   ids: string[]
@@ -19,7 +20,8 @@ export const useAzkarFavoritesStore = create<AzkarFavoritesState>()(
     }),
     {
       name: "azkar-favorites-storage",
-      skipHydration: true
+      skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
     }
   )
 )

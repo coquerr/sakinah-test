@@ -1,5 +1,6 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
+import { idbStorage } from "@/lib/idb-storage"
 
 interface QuranRecentState {
   lastSurahNumber: number | null
@@ -14,7 +15,8 @@ export const useQuranRecentStore = create<QuranRecentState>()(
     }),
     {
       name: "quran-recent-storage",
-      skipHydration: true
+      skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
     }
   )
 )

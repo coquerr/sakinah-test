@@ -1,15 +1,17 @@
 import { Coordinates, PrayerTimes } from "adhan"
 import { PrayerTimeEntry } from "@/types/prayer"
-import { getDagestanCalculationParams } from "@/lib/constants/dagestan-prayer-config"
+import { regionConfigs, RegionId } from "@/lib/constants/region-configs"
 import { prayerLabels } from "@/lib/constants/prayer-labels"
 
 export function buildPrayerTimes(
   latitude: number,
   longitude: number,
-  date: Date
+  date: Date,
+  regionId: RegionId = "dagestan" // Добавили параметр с дефолтным значением
 ): PrayerTimeEntry[] {
   const coordinates = new Coordinates(latitude, longitude)
-  const params = getDagestanCalculationParams()
+  // Получаем настройки для выбранного региона
+  const params = regionConfigs[regionId].getParams()
   const times = new PrayerTimes(coordinates, date, params)
 
   return [

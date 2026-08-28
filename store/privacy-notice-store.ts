@@ -1,5 +1,6 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
+import { idbStorage } from "@/lib/idb-storage"
 
 interface PrivacyNoticeState {
   dismissed: boolean
@@ -14,7 +15,8 @@ export const usePrivacyNoticeStore = create<PrivacyNoticeState>()(
     }),
     {
       name: "sakinah-privacy-notice",
-      skipHydration: true
+      skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
     }
   )
 )

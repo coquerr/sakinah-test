@@ -7,7 +7,8 @@ import { PrayerTracker } from "@/components/prayer/prayer-tracker"
 import { ProfileSummaryCard } from "@/components/profile/profile-summary-card"
 import { StreakBadge } from "@/components/profile/streak-badge"
 import { SectionLabel } from "@/components/settings/section-label"
-import { NotificationToggle } from "@/components/NotificationToggle";
+import { RegionSelector } from "@/components/profile/region-selector"
+import { DataBackup } from "@/components/settings/data-backup"
 
 export default function ProfilePage() {
   return (
@@ -27,10 +28,8 @@ export default function ProfilePage() {
       <div className="space-y-2">
         <SectionLabel labelKey="profile.settingsLabel" />
         <CitySearch />
-        
-        {/* Кнопка подписки на пуши добавлена сюда */}
-        <NotificationToggle />
-        
+        <RegionSelector />
+        <DataBackup />
         <LanguageSelector />
         <AppearanceSelector />
         <PrivacyNotice />

@@ -38,7 +38,6 @@ export async function GET(request: Request) {
         timeZone: timezone,
       }).split('/').reverse().join('-'); // Формат YYYY-MM-DD
 
-      // 3. Запрашиваем расписание намазов для города пользователя
       const apiRes = await fetch(
         `https://api.aladhan.com/v1/timingsByCity/${todayDate}?city=${city}&country=Russia&method=3`
       );

@@ -6,11 +6,28 @@ import { Search, MapPin } from "lucide-react"
 import { useCitySearch } from "@/hooks/use-city-search"
 import { useSettingsStore } from "@/store/settings-store"
 import { useTranslation } from "@/hooks/use-translation"
+import { RegionId } from "@/lib/constants/region-configs"
+
+// Функция для авто-определения региона по ключевым городам или областям
+function autoDetectRegion(city: any): RegionId | null {
+  // Open-Meteo обычно возвращает admin1, admin2, country
+  const searchStr = [city.name, city.admin1, city.admin2, city.country]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+
+  if (searchStr.match(/дагестан|dagestan|махачкала|дербент|хасавюрт|каспийск/)) return "dagestan"
+  if (searchStr.match(/чечн|chechn|грозный|аргун|шали|гудермес/)) return "chechnya"
+  if (searchStr.match(/ингуш|ingush|магас|назрань|сунжа|карабулак/)) return "ingushetia"
+
+  return null
+}
 
 export function CitySearch() {
   const [query, setQuery] = useState("")
   const { results, loading } = useCitySearch(query)
   const setCoordinates = useSettingsStore((state) => state.setCoordinates)
+  const setRegionId = useSettingsStore((state) => state.setRegionId)
   const currentLabel = useSettingsStore((state) => state.coordinates?.label)
   const { t } = useTranslation()
 
@@ -68,6 +85,12 @@ export function CitySearch() {
                     longitude: city.longitude,
                     label: `${city.name}, ${city.country}`
                   })
+                  
+                  const detectedRegion = autoDetectRegion(city)
+                  if (detectedRegion) {
+                    setRegionId(detectedRegion)
+                  }
+                  
                   setQuery("")
                 }}
                 className="flex w-full items-center justify-between border-t border-border-subtle px-4 py-2.5 text-left text-sm transition-colors first:border-t-0 hover:bg-surface-hover"

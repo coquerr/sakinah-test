@@ -1,8 +1,10 @@
 "use client"
 
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
 import { Language } from "@/types/settings"
+import { idbStorage } from "@/lib/idb-storage"
+import { RegionId } from "@/lib/constants/region-configs"
 
 interface Coordinates {
   latitude: number
@@ -13,8 +15,10 @@ interface Coordinates {
 interface SettingsState {
   coordinates: Coordinates | null
   language: Language
+  regionId: RegionId
   setCoordinates: (coordinates: Coordinates) => void
   setLanguage: (language: Language) => void
+  setRegionId: (regionId: RegionId) => void
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -22,9 +26,15 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       coordinates: null,
       language: "ru",
+      regionId: "dagestan", // Регион по умолчанию
       setCoordinates: (coordinates) => set({ coordinates }),
-      setLanguage: (language) => set({ language })
+      setLanguage: (language) => set({ language }),
+      setRegionId: (regionId) => set({ regionId })
     }),
-    { name: "sakinah-settings", skipHydration: true }
+    { 
+      name: "sakinah-settings", 
+      skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
+    }
   )
 )

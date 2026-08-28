@@ -1,9 +1,10 @@
 "use client"
 
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
 import { PrayerName } from "@/types/prayer"
 import { DayTracker, TrackerStatus } from "@/types/tracker"
+import { idbStorage } from "@/lib/idb-storage"
 
 interface TrackerState {
   days: Record<string, DayTracker>
@@ -54,7 +55,11 @@ export const useTrackerStore = create<TrackerState>()(
           dirtyDates: state.dirtyDates.filter((date) => !dates.includes(date))
         }))
     }),
-    { name: "sakinah-tracker", skipHydration: true }
+    { 
+      name: "sakinah-tracker", 
+      skipHydration: true,
+      storage: createJSONStorage(() => idbStorage)
+    }
   )
 )
 
