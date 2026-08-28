@@ -54,3 +54,24 @@ self.addEventListener("fetch", (event) => {
       .catch(() => caches.match(request).then((cached) => cached || caches.match("/")))
   )
 })
+
+self.addEventListener('push', function (event) {
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.body,
+      // Укажи правильные пути до иконок твоего PWA
+      icon: '/icon-192x192.png',
+      badge: '/icon-192x192.png',
+      vibrate: [200, 100, 200, 100, 200, 100, 200],
+      data: { url: '/' }
+    };
+    event.waitUntil(self.registration.showNotification(data.title, options));
+  }
+});
+
+// Открываем приложение при клике на уведомление
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  event.waitUntil(clients.openWindow(event.notification.data.url));
+});
