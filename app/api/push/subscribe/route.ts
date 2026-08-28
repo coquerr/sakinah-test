@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import redis from '@/lib/redis';
 
 export async function POST(request: Request) {
   try {
@@ -8,10 +8,13 @@ export async function POST(request: Request) {
     // endpoint уникален для каждого устройства, используем его как ID
     const subscriberId = subscription.endpoint;
     
-    // Сохраняем в KV Hash Map. Ключ хэша 'subscribers'
-    await kv.hset('subscribers', {
-      [subscriberId]: JSON.stringify({ subscription, timezone })
-    });
+    // Сохраняем в KV Hash Map через ioredis
+    // Синтаксис: redis.hset(ключ_хэша, поле, значение)
+    await redis.hset(
+      'subscribers',
+      subscriberId,
+      JSON.stringify({ subscription, timezone })
+    );
 
     return NextResponse.json({ success: true });
   } catch (error) {
