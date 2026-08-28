@@ -3,17 +3,19 @@ import redis from '@/lib/redis';
 
 export async function POST(request: Request) {
   try {
-    const { subscription, timezone } = await request.json();
+    const { subscription, timezone, city } = await request.json();
     
-    // endpoint уникален для каждого устройства, используем его как ID
     const subscriberId = subscription.endpoint;
     
-    // Сохраняем в KV Hash Map через ioredis
-    // Синтаксис: redis.hset(ключ_хэша, поле, значение)
+    // Сохраняем подписку, таймзону и город (по умолчанию Махачкала, если город не передан)
     await redis.hset(
       'subscribers',
       subscriberId,
-      JSON.stringify({ subscription, timezone })
+      JSON.stringify({ 
+        subscription, 
+        timezone: timezone || 'Europe/Moscow',
+        city: city || 'Makhachkala' 
+      })
     );
 
     return NextResponse.json({ success: true });
