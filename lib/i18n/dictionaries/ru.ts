@@ -168,7 +168,7 @@ export const ru: Dictionary = {
   },
   quickLinks: {
     calendar: "Исламский календарь",
-    stats: "Статистика"
+    stats: "Трекер намазов"
   },
     profile: {
     quickLinksLabel: "Разделы",

@@ -66,7 +66,7 @@ export function QiblaCompass() {
         <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 bg-glow-primary" />
 
         <div
-          className="relative mt-8 flex items-center justify-center"
+          className="relative mt-4 flex items-center justify-center"
           style={{ width: "min(78vw, 320px)", height: "min(78vw, 320px)" }}
         >
           <div className="absolute inset-0 rounded-full border border-border/60" />
@@ -106,7 +106,7 @@ export function QiblaCompass() {
             </motion.span>
           ))}
 
-                    <motion.span
+          <motion.span
             className="absolute inset-0"
             animate={{ rotate: qiblaAngle - deviceHeading }}
             transition={springTransition}
@@ -122,17 +122,11 @@ export function QiblaCompass() {
             />
           </motion.span>
 
-                    <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t border-muted-foreground/40" />
-
+          <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t border-muted-foreground/40" />
           <div className="absolute h-3 w-3 rounded-full bg-primary" />
         </div>
         
-        <div className="relative mt-6 flex flex-col items-center">
-          <span className="font-heading text-4xl font-semibold tabular-nums text-foreground">
-            {Math.round(qiblaAngle)}°
-          </span>
-          <span className="mt-1 text-xs text-muted-foreground">{t("qibla.fromNorth")}</span>
-
+        <div className="relative mt-4 flex flex-col items-center">
           <AnimatePresence mode="wait">
             {aligned ? (
               <motion.div
@@ -141,7 +135,7 @@ export function QiblaCompass() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.25 }}
-                className="mt-3 flex items-center gap-1.5 rounded-full bg-accent/12 px-3 py-1.5 text-xs font-medium text-accent"
+                className="mt-1 flex items-center gap-1.5 rounded-full bg-accent/12 px-3 py-1.5 text-xs font-medium text-accent"
               >
                 <CheckCircle2 size={14} />
                 {t("qibla.aligned")}
@@ -153,7 +147,7 @@ export function QiblaCompass() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="mt-2 text-sm font-medium text-primary"
+                className="mt-1 text-sm font-medium text-primary"
               >
                 {t(`qibla.directions.${compassPoint}`)}
               </motion.span>

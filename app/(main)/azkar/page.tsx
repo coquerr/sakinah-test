@@ -5,13 +5,14 @@ import { AzkarHubLink } from "@/components/azkar/azkar-hub-link"
 import { AzkarList } from "@/components/azkar/azkar-list"
 import { AzkarNowRecommendation } from "@/components/azkar/azkar-now-recommendation"
 import { useTranslation } from "@/hooks/use-translation"
+import { TasbihCounter } from "@/components/tasbih/tasbih-counter"
 
 export default function AzkarPage() {
   const { t } = useTranslation()
 
   return (
     <section className="space-y-3 py-4">
-      <div className="mb-1">
+      <div className="mb-3">
         <h2 className="font-heading text-2xl font-semibold tracking-tight text-foreground">
           {t("azkar.title")}
         </h2>
@@ -26,6 +27,9 @@ export default function AzkarPage() {
           <ArrowUpRight size={12} />
         </a>
       </div>
+
+      {/* Электронный тасбих добавлен сюда */}
+      <TasbihCounter />
 
       <AzkarNowRecommendation />
       <AzkarHubLink />

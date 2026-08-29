@@ -11,7 +11,8 @@ const STORE_KEYS = [
   "sakinah-onboarding",
   "sakinah-quran-recent",
   "sakinah-privacy-notice",
-  "sakinah-azkar-favorites"
+  "sakinah-azkar-favorites",
+  "sakinah-tasbih"
 ]
 
 export function DataBackup() {

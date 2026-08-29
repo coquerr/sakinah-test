@@ -8,7 +8,7 @@ import { TranslationKey } from "@/lib/i18n"
 
 const links: { href: string; icon: typeof CalendarDays; labelKey: TranslationKey }[] = [
   { href: "/calendar", icon: CalendarDays, labelKey: "quickLinks.calendar" },
-  { href: "/stats", icon: BarChart3, labelKey: "quickLinks.stats" }
+  { href: "/profile/tracker", icon: BarChart3, labelKey: "quickLinks.stats" }
 ]
 
 export function QuickLinks() {

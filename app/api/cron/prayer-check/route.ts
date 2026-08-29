@@ -1,6 +1,17 @@
 import { NextResponse } from 'next/server';
 import redis from '@/lib/redis';
 import { configureWebPush } from '@/lib/push';
+import { PrayerTimes, Coordinates } from 'adhan';
+import { getDagestanCalculationParams } from '@/lib/constants/dagestan-prayer-config';
+
+const CITY_COORDS: Record<string, [number, number]> = {
+  'Makhachkala': [42.9831, 47.5046],
+  'Махачкала': [42.9831, 47.5046],
+  'Grozny': [43.3136, 45.6944],
+  'Грозный': [43.3136, 45.6944],
+  'Magas': [43.1667, 44.8000],
+  'Магас': [43.1667, 44.8000],
+};
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization') || '';
@@ -20,65 +31,65 @@ export async function GET(request: Request) {
     }
 
     const notifications = [];
+    const now = new Date(); // Используем стандартный Date
 
     for (const [endpoint, dataString] of Object.entries(subscribers)) {
       const data = typeof dataString === 'string' ? JSON.parse(dataString) : dataString;
       const { subscription, timezone = 'Europe/Moscow', city = 'Makhachkala' } = data;
 
-      // 1. Узнаем текущее время пользователя в его часовом поясе
-      const nowUserTime = new Date().toLocaleTimeString('en-GB', {
+      const nowUserTime = now.toLocaleTimeString('en-GB', {
         timeZone: timezone,
         hour: '2-digit',
         minute: '2-digit',
         hour12: false,
-      }); // Формат "HH:MM"
+      });
 
-      // 2. Получаем сегодняшнюю дату для API
-      const todayDate = new Date().toLocaleDateString('en-GB', {
-        timeZone: timezone,
-      }).split('/').reverse().join('-'); // Формат YYYY-MM-DD
+      const [lat, lng] = CITY_COORDS[city] || CITY_COORDS['Makhachkala'];
+      const coordinates = new Coordinates(lat, lng);
+      const params = getDagestanCalculationParams();
 
-      const apiRes = await fetch(
-        `https://api.aladhan.com/v1/timingsByCity/${todayDate}?city=${city}&country=Russia&method=3`
-      );
-      const apiData = await apiRes.json();
+      // Передаем now напрямую в PrayerTimes
+      const prayerTimes = new PrayerTimes(coordinates, now, params);
 
-      if (apiData && apiData.data && apiData.data.timings) {
-        const timings = apiData.data.timings;
-        // Намазы, которые нас интересуют: Фаджр, Зухр, Аср, Магриб, Иша
-        const prayerNames: Record<string, string> = {
-          Fajr: 'Фаджр',
-          Dhuhr: 'Зухр',
-          Asr: 'Аср',
-          Maghrib: 'Магриб',
-          Isha: 'Иша',
-        };
+      // Явно указываем тип Record<string, string>, чтобы избежать ошибки 7053
+      const timings: Record<string, string> = {
+        Fajr: prayerTimes.fajr.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
+        Dhuhr: prayerTimes.dhuhr.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
+        Asr: prayerTimes.asr.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
+        Maghrib: prayerTimes.maghrib.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
+        Isha: prayerTimes.isha.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
+      };
 
-        let currentPrayer = null;
+      const prayerNames: Record<string, string> = {
+        Fajr: 'Фаджр',
+        Dhuhr: 'Зухр',
+        Asr: 'Аср',
+        Maghrib: 'Магриб',
+        Isha: 'Иша',
+      };
 
-        for (const [key, name] of Object.entries(prayerNames)) {
-          const prayerTime = timings[key]; // Время в формате "HH:MM" (без секунд)
-          if (prayerTime === nowUserTime) {
-            currentPrayer = name;
-            break;
-          }
+      let currentPrayer = null;
+
+      for (const [key, name] of Object.entries(prayerNames)) {
+        if (timings[key] === nowUserTime) {
+          currentPrayer = name;
+          break;
         }
+      }
 
-        // 4. Если текущее время совпало со временем одного из намазов — отправляем пуш
-        if (currentPrayer) {
-          const payload = JSON.stringify({
-            title: `Время намаза: ${currentPrayer}`,
-            body: `Наступило время молитвы ${currentPrayer}.`,
-          });
+      if (currentPrayer) {
+        const payload = JSON.stringify({
+          title: `Время намаза: ${currentPrayer}`,
+          body: `Наступило время молитвы ${currentPrayer}.`,
+        });
 
-          notifications.push(
-            webpush.sendNotification(subscription, payload).catch(async (error: any) => {
-              if (error.statusCode === 410) {
-                await redis.hdel('subscribers', endpoint);
-              }
-            })
-          );
-        }
+        notifications.push(
+          webpush.sendNotification(subscription, payload).catch(async (error: any) => {
+            if (error.statusCode === 410) {
+              await redis.hdel('subscribers', endpoint);
+            }
+          })
+        );
       }
     }
 
