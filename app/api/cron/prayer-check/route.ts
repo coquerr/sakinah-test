@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     }
 
     const notifications = [];
-    const now = new Date(); // Используем стандартный Date
+    const now = new Date();
 
     for (const [endpoint, dataString] of Object.entries(subscribers)) {
       const data = typeof dataString === 'string' ? JSON.parse(dataString) : dataString;
@@ -44,14 +44,20 @@ export async function GET(request: Request) {
         hour12: false,
       });
 
+      // 1. Изолируем дату пользователя от часового пояса сервера
+      const nowUserDateStr = now.toLocaleDateString('en-CA', { timeZone: timezone });
+      const [year, month, day] = nowUserDateStr.split('-').map(Number);
+      
+      // Искусственно ставим 12:00 дня, чтобы библиотека adhan не сместила день из-за UTC-сервера
+      const exactUserDate = new Date(year, month - 1, day, 12, 0, 0);
+
       const [lat, lng] = CITY_COORDS[city] || CITY_COORDS['Makhachkala'];
       const coordinates = new Coordinates(lat, lng);
       const params = getDagestanCalculationParams();
 
-      // Передаем now напрямую в PrayerTimes
-      const prayerTimes = new PrayerTimes(coordinates, now, params);
+      // Передаем жестко зафиксированную дату
+      const prayerTimes = new PrayerTimes(coordinates, exactUserDate, params);
 
-      // Явно указываем тип Record<string, string>, чтобы избежать ошибки 7053
       const timings: Record<string, string> = {
         Fajr: prayerTimes.fajr.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
         Dhuhr: prayerTimes.dhuhr.toLocaleTimeString('en-GB', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: false }),
@@ -83,8 +89,13 @@ export async function GET(request: Request) {
           body: `Наступило время молитвы ${currentPrayer}.`,
         });
 
+        // 2. Устанавливаем высший приоритет, чтобы пробить ночной спящий режим телефона
+        const options = {
+          urgency: 'high' as const,
+        };
+        
         notifications.push(
-          webpush.sendNotification(subscription, payload).catch(async (error: any) => {
+          webpush.sendNotification(subscription, payload, options).catch(async (error: any) => {
             if (error.statusCode === 410) {
               await redis.hdel('subscribers', endpoint);
             }
