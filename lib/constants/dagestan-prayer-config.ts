@@ -9,7 +9,7 @@ export function getDagestanCalculationParams() {
     dhuhr: 4,
     asr: 3,
     maghrib: 5,
-    isha: -13
+    isha: -11 
   }
 
   return params
