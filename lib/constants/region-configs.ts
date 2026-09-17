@@ -15,12 +15,12 @@ export const regionConfigs: Record<RegionId, RegionConfig> = {
     getParams: () => {
       const params = CalculationMethod.MuslimWorldLeague()
       params.adjustments = {
-        fajr: 4,
+        fajr: 3,     // Скорректировано (было 4)
         sunrise: -3,
-        dhuhr: 4,
+        dhuhr: 3,    // Скорректировано (было 4)
         asr: 3,
         maghrib: 5,
-        isha: -13
+        isha: -9     // Скорректировано (было -13)
       }
       return params
     }
